@@ -24,7 +24,7 @@ class AuthController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        $user = User::fromUSer($user);
+        $user = User::fromUser($user);
 
         return response()->json([
             'message' => 'Usuário registrado com sucesso!',
@@ -83,7 +83,7 @@ class AuthController extends Controller
             ], 404);
         }
 
-        $user = User::fromUSer($user);
+        $user = User::fromUser($user);
 
         return response()->json([
             'result' => true,

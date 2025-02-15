@@ -47,7 +47,7 @@ class User extends Authenticatable
         ];
     }
 
-    public static function fromUSer($user)
+    public static function fromUser($user)
     {
         return new self([
             'name' => $user->name,
