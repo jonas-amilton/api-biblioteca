@@ -10,8 +10,6 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/users', [UserController::class, 'index'])->middleware('auth:sanctum');
-    Route::get('/hello', function () {
-        return response()->json(['hello' => 'world']);
-    });
+    Route::get('/users', [UserController::class, 'index']);
+    Route::get('/me', [AuthController::class, 'me']);
 });

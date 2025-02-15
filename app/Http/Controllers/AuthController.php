@@ -72,4 +72,23 @@ class AuthController extends Controller
             'message' => 'Logout realizado com sucesso'
         ], 200);
     }
+
+    public function me()
+    {
+        $user = auth('sanctum')->user();
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'Usuário não logado.'
+            ], 404);
+        }
+
+        $user = User::fromUSer($user);
+
+        return response()->json([
+            'result' => true,
+            'message' => 'Informações do usuário',
+            'user' => $user
+        ], 200);
+    }
 }
