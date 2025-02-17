@@ -59,6 +59,7 @@ class BookController extends Controller
         }
 
         return response()->json([
+            'message' => 'Listagem de livros',
             'books' => $books
         ], 200);
     }
