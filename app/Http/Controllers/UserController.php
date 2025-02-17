@@ -21,4 +21,17 @@ class UserController extends Controller
             'users' => $users
         ], 200);
     }
+
+    public function me(Request $request)
+    {
+        $user = $request->user();
+
+        $user = User::fromUser($user);
+
+        return response()->json([
+            'result' => true,
+            'message' => 'Informações do usuário',
+            'user' => $user,
+        ], 200);
+    }
 }
