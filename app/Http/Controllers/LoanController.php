@@ -43,4 +43,20 @@ class LoanController extends Controller
             'loan' => $loan
         ], 201);
     }
+
+    public function show()
+    {
+        $loans = Loan::all();
+
+        if (!$loans) {
+            return response()->json([
+                'message' => 'Nenhum emprestimo encontrado'
+            ], 404);
+        }
+
+        return response()->json([
+            'message' => 'Listagem de emprestimos',
+            'loans' => $loans
+        ], 200);
+    }
 }

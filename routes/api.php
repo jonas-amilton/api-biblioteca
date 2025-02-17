@@ -16,4 +16,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/books', [BookController::class, 'store']);
     Route::get('/books', [BookController::class, 'show']);
     Route::post('/loans', [LoanController::class, 'store']);
+    Route::get('/loans', [LoanController::class, 'show']);
 });
