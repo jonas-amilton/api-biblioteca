@@ -11,7 +11,6 @@ class BookController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'user_id' => 'required|exists:users,id',
             'isbn' => 'required|string|max:13|unique:books',
             'title' => 'required|string|max:60',
             'author' => 'required|string|max:60',
@@ -24,11 +23,10 @@ class BookController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'error' => $validator->errors()->first(),
-            ]);
+            ], 400);
         }
 
         $book = Book::create([
-            'user_id'=> $request->user_id,
             'isbn' => $request->isbn,
             'title' => $request->title,
             'author' => $request->author,
@@ -38,9 +36,30 @@ class BookController extends Controller
             'summary' => $request->summary
         ]);
 
+        if (!$book) {
+            return response()->json([
+                'message' => 'Erro ao registrar livro'
+            ], 500);
+        }
+
         return response()->json([
-            'message'=> 'Livro cadastrado com sucesso',
-            'book'=> $book,
+            'message' => 'Livro cadastrado com sucesso',
+            'book' => $book,
         ], 201);
+    }
+
+    public function show()
+    {
+        $books = Book::all();
+
+        if (!$books) {
+            return response()->json([
+                'message' => 'Nenhum livro encontrado'
+            ], 404);
+        }
+
+        return response()->json([
+            'books' => $books
+        ], 200);
     }
 }
