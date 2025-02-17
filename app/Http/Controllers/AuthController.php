@@ -45,7 +45,7 @@ class AuthController extends Controller
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
                 'message' => 'Credenciais inválidas'
-            ], 404);
+            ], 401);
         }
 
         $token = $user->createToken('auth_token')->plainTextToken;
@@ -56,39 +56,14 @@ class AuthController extends Controller
     }
 
 
-    public function logout()
+    public function logout(Request $request)
     {
-        $user = auth('sanctum')->user();
+        $user = $request->user();
 
-        if (!$user) {
-            return response()->json([
-                'message' => 'Nenhum usuário logado'
-            ], 404);
-        }
-
-        $user->currentAccessToken()->delete();
+        $user->tokens()->delete();
 
         return response()->json([
             'message' => 'Logout realizado com sucesso'
-        ], 200);
-    }
-
-    public function me()
-    {
-        $user = auth('sanctum')->user();
-
-        if (!$user) {
-            return response()->json([
-                'message' => 'Usuário não logado.'
-            ], 404);
-        }
-
-        $user = User::fromUser($user);
-
-        return response()->json([
-            'result' => true,
-            'message' => 'Informações do usuário',
-            'user' => $user
         ], 200);
     }
 }
