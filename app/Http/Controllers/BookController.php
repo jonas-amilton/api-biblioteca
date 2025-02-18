@@ -80,4 +80,43 @@ class BookController extends Controller
             'message' => 'Livro deletado com sucesso'
         ], 200);
     }
+
+    public function update(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'title' => 'string|max:60',
+            'author' => 'string|max:60',
+            'publisher' => 'string|max:255',
+            'publication_date' => 'date',
+            'subject' => 'string|max:50',
+            'summary' => 'string|max:255'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'error' => $validator->errors()->first(),
+            ], 400);
+        }
+
+        $book = Book::find($request->id, 'id');
+
+        if (!$book) {
+            return response()->json([
+                'message' => 'Livro não encontrado',
+            ], 404);
+        }
+
+        $book->update([
+            'title' => $request->title,
+            'author' => $request->author,
+            'publisher' => $request->publisher,
+            'publication_date' => $request->publication_date,
+            'subject' => $request->subject,
+            'summary' => $request->summary
+        ]);
+
+        return response()->json([
+            'message' => 'Livro atualizado com sucesso',
+        ], 202);
+    }
 }
