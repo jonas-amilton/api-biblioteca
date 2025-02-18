@@ -119,4 +119,22 @@ class BookController extends Controller
             'message' => 'Livro atualizado com sucesso',
         ], 202);
     }
+
+    public function bookById(Request $request)
+    {
+        $book = Book::find($request->id);
+
+        if (!$book) {
+            return response()->json([
+                'message' => 'Livro não encontrado'
+            ], 404);
+        }
+
+        $book = Book::fromBook($book);
+
+        return response()->json([
+            'message' => 'Detalhes do livro',
+            'book' => $book
+        ], 200);
+    }
 }
