@@ -24,4 +24,17 @@ class Book extends Model
         'subject',
         'summary'
     ];
+
+    public static function fromBook($book)
+    {
+        return new self([
+            'isbn' => $book->isbn,
+            'title' => $book->title,
+            'author' => $book->author,
+            'publisher' => $book->publisher,
+            'publication_date' => $book->publication_date,
+            'subject' => $book->subject,
+            'summary' => $book->summary
+        ]);
+    }
 }
