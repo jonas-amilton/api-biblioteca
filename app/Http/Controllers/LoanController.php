@@ -126,4 +126,23 @@ class LoanController extends Controller
             'message' => 'Empréstimo deletado com sucesso'
         ], 200);
     }
+
+    public function pending()
+    {
+        $loans = Loan::where(
+            'status',
+            'pending'
+        )->get();
+
+        if (!$loans) {
+            return response()->json([
+                'message' => 'Nenhum empréstimo pendente encontrado'
+            ], 404);
+        }
+
+        return response()->json([
+            'message' => 'Listagem de empréstimos pendentes',
+            'loans' => $loans
+        ], 200);
+    }
 }
