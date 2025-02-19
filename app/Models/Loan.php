@@ -21,4 +21,15 @@ class Loan extends Model
         'user_id',
         'book_id'
     ];
+
+    public static function fromLoan($loan)
+    {
+        return new self([
+            'loan_date' => $loan->loan_date,
+            'return_date' => $loan->return_date,
+            'status' => $loan->status,
+            'user_id' => $loan->user_id,
+            'book_id' => $loan->book_id
+        ]);
+    }
 }
