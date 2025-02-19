@@ -59,4 +59,22 @@ class LoanController extends Controller
             'loans' => $loans
         ], 200);
     }
+
+    public function loanById(Request $request)
+    {
+        $loan = Loan::find($request->id);
+
+        if (!$loan) {
+            return response()->json([
+                'message' => 'Empréstimo não encontrado'
+            ], 404);
+        }
+
+        $loan = Loan::fromLoan($loan);
+
+        return response()->json([
+            'message' => 'Detalhes do empréstimo',
+            'loan' => $loan
+        ], 200);
+    }
 }
