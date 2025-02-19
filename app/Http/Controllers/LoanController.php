@@ -109,4 +109,21 @@ class LoanController extends Controller
             'loan' => $loan
         ], 200);
     }
+
+    public function destroy(Request $request)
+    {
+        $loan = Loan::find($request->id);
+
+        if (!$loan) {
+            return response()->json([
+                'message' => 'Emprestimo não encontrado'
+            ], 404);
+        }
+
+        $loan->delete();
+
+        return response()->json([
+            'message' => 'Empréstimo deletado com sucesso'
+        ], 200);
+    }
 }

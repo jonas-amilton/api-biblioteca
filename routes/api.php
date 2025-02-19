@@ -22,4 +22,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/loans', [LoanController::class, 'show']);
     Route::get('/loans/{id}', [LoanController::class, 'loanById']);
     Route::put('/loans/{id}', [LoanController::class, 'update']);
+    Route::delete('/loans/{id}', [LoanController::class, 'destroy']);
 });
