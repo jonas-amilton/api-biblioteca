@@ -21,4 +21,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/loans', [LoanController::class, 'store']);
     Route::get('/loans', [LoanController::class, 'show']);
     Route::get('/loans/{id}', [LoanController::class, 'loanById']);
+    Route::put('/loans/{id}', [LoanController::class, 'update']);
 });
