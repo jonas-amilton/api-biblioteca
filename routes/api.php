@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\Auth\{
     RegisterController,
-    LoginController
+    LoginController,
+    LogoutController
 };
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Book\{
@@ -24,7 +25,7 @@ Route::post('/login', LoginController::class);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users', [UserController::class, 'index']);
     Route::get('/me', [UserController::class, 'me']);
-    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/logout', LogoutController::class);
     Route::post('/books', StoreBookController::class);
     Route::get('/books', ShowBookController::class);
     Route::get('/books/{id}', BookByIdController::class);
