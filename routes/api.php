@@ -16,7 +16,10 @@ use App\Http\Controllers\Book\{
     BookByIdController
 };
 
-use App\Http\Controllers\Loan\StoreLoanController;
+use App\Http\Controllers\Loan\{
+    StoreLoanController,
+    ShowLoanController
+};
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\UserController;
 
@@ -34,7 +37,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/books/{id}', UpdateBookController::class);
     Route::get('/available-books', AvailableBookController::class);
     Route::post('/loans', StoreLoanController::class);
-    Route::get('/loans', [LoanController::class, 'show']);
+    Route::get('/loans', ShowLoanController::class);
     Route::get('/loans/{id}', [LoanController::class, 'loanById']);
     Route::put('/loans/{id}', [LoanController::class, 'update']);
     Route::delete('/loans/{id}', [LoanController::class, 'destroy']);
