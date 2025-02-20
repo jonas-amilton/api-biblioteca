@@ -1,11 +1,12 @@
 <?php
+use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\{
     RegisterController,
     LoginController,
     LogoutController
 };
-use App\Http\Controllers\AuthController;
+
 use App\Http\Controllers\Book\{
     AvailableBookController,
     StoreBookController,
@@ -15,9 +16,9 @@ use App\Http\Controllers\Book\{
     BookByIdController
 };
 
+use App\Http\Controllers\Loan\StoreLoanController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Route;
 
 Route::post('/register', RegisterController::class);
 Route::post('/login', LoginController::class);
@@ -32,7 +33,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/books/{id}', DestroyBookController::class);
     Route::put('/books/{id}', UpdateBookController::class);
     Route::get('/available-books', AvailableBookController::class);
-    Route::post('/loans', [LoanController::class, 'store']);
+    Route::post('/loans', StoreLoanController::class);
     Route::get('/loans', [LoanController::class, 'show']);
     Route::get('/loans/{id}', [LoanController::class, 'loanById']);
     Route::put('/loans/{id}', [LoanController::class, 'update']);
