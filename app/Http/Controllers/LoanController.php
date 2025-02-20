@@ -145,4 +145,25 @@ class LoanController extends Controller
             'loans' => $loans
         ], 200);
     }
+
+    public function showLoansByAuthUser()
+    {
+        $id = auth()->user()->getAuthIdentifier();
+
+        $loans = Loan::where(
+            'user_id',
+            $id
+        )->get();
+
+        if (!$loans) {
+            return response()->json([
+                'message' => 'Nenhum empréstimo pendente encontrado'
+            ], 404);
+        }
+
+        return response()->json([
+            'message' => 'Empréstimos do usuário autenticado',
+            'loans' => $loans
+        ], 200);
+    }
 }

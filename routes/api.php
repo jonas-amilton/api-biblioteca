@@ -24,4 +24,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/loans/{id}', [LoanController::class, 'update']);
     Route::delete('/loans/{id}', [LoanController::class, 'destroy']);
     Route::get('/pending', [LoanController::class, 'pending']);
+    Route::get('/my-loans', [LoanController::class, 'showLoansByAuthUser']);
 });
