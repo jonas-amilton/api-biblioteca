@@ -7,7 +7,7 @@ use App\Models\Loan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class BookController extends Controller
+class BookController
 {
     public function store(Request $request)
     {
@@ -136,39 +136,6 @@ class BookController extends Controller
         return response()->json([
             'message' => 'Detalhes do livro',
             'book' => $book
-        ], 200);
-    }
-
-    public function availableBooks()
-    {
-        $idNotAvailable = Loan::select('id')
-            ->where(
-                'status',
-                'pending'
-            )->get();
-
-        if (!empty($idNotAvailable)) {
-            $booksAvailables = Book::select(
-                'books.id',
-                'books.title',
-                'books.isbn',
-                'books.author',
-                'books.publisher',
-                'books.subject',
-                'books.summary'
-            )->whereNotIn('books.id', $idNotAvailable)
-                ->get();
-        }
-
-        if (!$booksAvailables) {
-            return response()->json([
-                'message' => 'Nenhum livro está disponível'
-            ], 404);
-        }
-
-        return response()->json([
-            'message' => 'Livros disponíveis',
-            'booksAvailables' => $booksAvailables
         ], 200);
     }
 }
