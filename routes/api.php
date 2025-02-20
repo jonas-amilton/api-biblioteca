@@ -1,6 +1,9 @@
 <?php
 
-use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\{
+    RegisterController,
+    LoginController
+};
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Book\{
     AvailableBookController,
@@ -16,7 +19,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/register', RegisterController::class);
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', LoginController::class);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users', [UserController::class, 'index']);
