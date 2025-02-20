@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Book;
 
 use App\Models\Book;
 use Illuminate\Http\Request;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 
 class StoreBookController
 {
