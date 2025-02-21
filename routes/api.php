@@ -27,13 +27,13 @@ use App\Http\Controllers\Loan\{
     ShowLoanByAuthUserController
 };
 
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\User\AllUserController;
 
 Route::post('/register', RegisterController::class);
 Route::post('/login', LoginController::class);
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/users', [UserController::class, 'index']);
+    Route::get('/users', AllUserController::class);
     Route::get('/me', MeController::class);
     Route::post('/logout', LogoutController::class);
     Route::post('/books', StoreBookController::class);
