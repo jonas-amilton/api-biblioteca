@@ -19,7 +19,8 @@ use App\Http\Controllers\Book\{
 use App\Http\Controllers\Loan\{
     StoreLoanController,
     ShowLoanController,
-    LoanByIdController
+    LoanByIdController,
+    UpdateStatusLoanController
 };
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\UserController;
@@ -40,7 +41,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/loans', StoreLoanController::class);
     Route::get('/loans', ShowLoanController::class);
     Route::get('/loans/{id}', LoanByIdController::class);
-    Route::put('/loans/{id}', [LoanController::class, 'update']);
+    Route::put('/loans/{id}', UpdateStatusLoanController::class);
     Route::delete('/loans/{id}', [LoanController::class, 'destroy']);
     Route::get('/pending', [LoanController::class, 'pending']);
     Route::get('/my-loans', [LoanController::class, 'showLoansByAuthUser']);
