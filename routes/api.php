@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\{
     RegisterController,
     LoginController,
-    LogoutController
+    LogoutController,
+    MeController
 };
 
 use App\Http\Controllers\Book\{
@@ -33,7 +34,7 @@ Route::post('/login', LoginController::class);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users', [UserController::class, 'index']);
-    Route::get('/me', [UserController::class, 'me']);
+    Route::get('/me', MeController::class);
     Route::post('/logout', LogoutController::class);
     Route::post('/books', StoreBookController::class);
     Route::get('/books', ShowBookController::class);
