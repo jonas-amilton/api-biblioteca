@@ -21,13 +21,9 @@ class AvailableBookController
      */
     public function __invoke()
     {
-        $idNotAvailable = $this->loanService->idNotAvailable();
-
-        if (isset($idNotAvailable)) {
-            $booksAvailables = $this
-                ->bookService
-                ->booksAvailable($idNotAvailable);
-        }
+        $booksAvailables = $this
+            ->bookService
+            ->booksAvailable();
 
         if (!$booksAvailables) {
             return response()->json([

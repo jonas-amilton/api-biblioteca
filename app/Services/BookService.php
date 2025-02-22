@@ -1,14 +1,11 @@
 <?php
 namespace App\Services;
 
-use App\Models\{
-    Book,
-    Loan
-};
+use App\Models\Book;
 
 class BookService
 {
-    public function booksAvailable($idNotAvailable)
+    public function booksAvailable()
     {
         return Book::select(
             'books.id',
@@ -18,7 +15,13 @@ class BookService
             'books.publisher',
             'books.subject',
             'books.summary'
-        )->whereNotIn('books.id', $idNotAvailable)
+        )
+            ->leftJoin('loans', 'books.id', '=', 'loans.book_id')
+            ->where(function ($query) {
+                $query->whereNull('loans.id')
+                    ->orWhere('loans.status', '!=', 'pending');
+            })
+            ->groupBy('books.id', 'books.title', 'books.isbn', 'books.author', 'books.publisher', 'books.subject', 'books.summary')
             ->get();
     }
 }
