@@ -1,12 +1,8 @@
 <?php
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\Auth\{
-    RegisterController,
-    LoginController,
-    LogoutController,
-    MeController
-};
+require_once __DIR__ ."/authRoutes.php";
+
 
 use App\Http\Controllers\Book\{
     AvailableBookController,
@@ -29,13 +25,9 @@ use App\Http\Controllers\Loan\{
 
 use App\Http\Controllers\User\AllUserController;
 
-Route::post('/register', RegisterController::class);
-Route::post('/login', LoginController::class);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users', AllUserController::class);
-    Route::get('/me', MeController::class);
-    Route::post('/logout', LogoutController::class);
     Route::post('/books', StoreBookController::class);
     Route::get('/books', ShowBookController::class);
     Route::get('/books/{id}', BookByIdController::class);
