@@ -2,16 +2,7 @@
 use Illuminate\Support\Facades\Route;
 
 require_once __DIR__ ."/authRoutes.php";
-
-
-use App\Http\Controllers\Book\{
-    AvailableBookController,
-    StoreBookController,
-    ShowBookController,
-    DestroyBookController,
-    UpdateBookController,
-    BookByIdController
-};
+require_once __DIR__ ."/bookRoutes.php";
 
 use App\Http\Controllers\Loan\{
     StoreLoanController,
@@ -28,12 +19,6 @@ use App\Http\Controllers\User\AllUserController;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users', AllUserController::class);
-    Route::post('/books', StoreBookController::class);
-    Route::get('/books', ShowBookController::class);
-    Route::get('/books/{id}', BookByIdController::class);
-    Route::delete('/books/{id}', DestroyBookController::class);
-    Route::put('/books/{id}', UpdateBookController::class);
-    Route::get('/available-books', AvailableBookController::class);
     Route::post('/loans', StoreLoanController::class);
     Route::get('/loans', ShowLoanController::class);
     Route::get('/loans/{id}', LoanByIdController::class);
