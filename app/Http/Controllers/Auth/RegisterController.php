@@ -4,29 +4,34 @@ namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
 use App\Http\Requests\RegisterRequest;
-use Illuminate\Support\Facades\Hash;
+use App\Services\UserService;
 
 class RegisterController
 {
+    protected $userService;
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
     /**
      * Handle the incoming request.
      */
     public function __invoke(RegisterRequest $request)
     {
-        $user = User::create([
-            'name' => $request->validated('name'),
-            'email' => $request->validated('email'),
-            'password' => Hash::make($request->validated('password'))
-        ]);
+        $user = $this->userService->registerUser($request->validated());
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+        if (!$user) {
+            return response()->json([
+                'message' => 'Registro de usuário falhou. Email já está em uso.'
+            ], 422);
+        }
 
         $user = User::fromUser($user);
 
         return response()->json([
             'message' => 'Usuário registrado com sucesso!',
-            'user' => $user,
-            'token' => $token
+            'user' => $user
         ], 201);
     }
 }
