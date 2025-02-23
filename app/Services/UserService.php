@@ -24,4 +24,9 @@ class UserService
 
         return $user;
     }
+
+    public function findByEmail($email)
+    {
+        return $this->userRepository->findByEmail($email);
+    }
 }
