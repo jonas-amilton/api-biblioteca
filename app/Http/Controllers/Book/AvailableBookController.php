@@ -3,27 +3,17 @@
 namespace App\Http\Controllers\Book;
 
 use App\Services\BookService;
-use App\Services\LoanService;
 
 class AvailableBookController
 {
-    private $bookService;
-    private $loanService;
-
-    public function __construct()
-    {
-        $this->bookService = new BookService();
-        $this->loanService = new LoanService();
-    }
-
     /**
      * Handle the incoming request.
      */
     public function __invoke()
     {
-        $booksAvailables = $this
-            ->bookService
-            ->booksAvailable();
+        $bookService = new BookService();
+
+        $booksAvailables = $bookService->booksAvailable();
 
         if (!$booksAvailables) {
             return response()->json([
