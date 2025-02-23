@@ -3,32 +3,16 @@
 namespace App\Http\Controllers\Book;
 
 use App\Models\Book;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\UpdateBookRequest;
 
 class UpdateBookController
 {
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request)
+    public function __invoke(UpdateBookRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'title' => 'string|max:60',
-            'author' => 'string|max:60',
-            'publisher' => 'string|max:255',
-            'publication_date' => 'date',
-            'subject' => 'string|max:50',
-            'summary' => 'string|max:255'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'error' => $validator->errors()->first(),
-            ], 400);
-        }
-
-        $book = Book::find($request->id, 'id');
+        $book = Book::find($request->validated('id'), 'id');
 
         if (!$book) {
             return response()->json([
@@ -36,14 +20,7 @@ class UpdateBookController
             ], 404);
         }
 
-        $book->update([
-            'title' => $request->title,
-            'author' => $request->author,
-            'publisher' => $request->publisher,
-            'publication_date' => $request->publication_date,
-            'subject' => $request->subject,
-            'summary' => $request->summary
-        ]);
+        $book->update($request->validated());
 
         return response()->json([
             'message' => 'Livro atualizado com sucesso',
