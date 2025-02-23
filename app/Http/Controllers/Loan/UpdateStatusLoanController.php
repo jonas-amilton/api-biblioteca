@@ -3,27 +3,16 @@
 namespace App\Http\Controllers\Loan;
 
 use App\Models\Loan;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\UpdateStatusLoanRequest;
 
 class UpdateStatusLoanController
 {
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request)
+    public function __invoke(UpdateStatusLoanRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'status' => 'required|in:pending,returned,late',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'error' => $validator->errors()->first(),
-            ], 400);
-        }
-
-        $loan = Loan::find($request->id);
+        $loan = Loan::find($request->validated('id'));
 
         if (!$loan) {
             return response()->json([
@@ -31,9 +20,7 @@ class UpdateStatusLoanController
             ], 404);
         }
 
-        $loan->update([
-            'status' => $request->status
-        ]);
+        $loan->update($request->validated());
 
         $loan = Loan::fromLoan($loan);
 
