@@ -1,37 +1,22 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Requests\LoginRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\{
-    Validator,
-    Hash
-};
+use Illuminate\Support\Facades\Hash;
 
 class LoginController
 {
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request)
+    public function __invoke(LoginRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required|string|min:6|max:255'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'error' => $validator->errors()->first(),
-            ], 400);
-        }
-
         $user = User::where('email', $request->email)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
-                'message' => 'Credenciais inválidas'
+                'message' => 'Credenciais inválidas'
             ], 401);
         }
 
