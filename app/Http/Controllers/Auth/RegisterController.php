@@ -8,7 +8,7 @@ use App\Services\UserService;
 
 class RegisterController
 {
-    protected $userService;
+    private $userService;
 
     public function __construct(UserService $userService)
     {
