@@ -3,35 +3,20 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\{
-    Hash,
-    Validator
-};
+use App\Http\Requests\RegisterRequest;
+use Illuminate\Support\Facades\Hash;
 
 class RegisterController
 {
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request)
+    public function __invoke(RegisterRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|max:255'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'error' => $validator->errors()->first(),
-            ], 400);
-        }
-
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'name' => $request->validated('name'),
+            'email' => $request->validated('email'),
+            'password' => Hash::make($request->validated('password'))
         ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;
