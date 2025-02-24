@@ -1,8 +1,6 @@
 <?php
 namespace App\Repositories;
 
-use App\Models\Book;
-
 interface BookRepositoryInterface
 {
     public function findById(int $id);
