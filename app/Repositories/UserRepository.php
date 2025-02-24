@@ -12,12 +12,12 @@ class UserRepository implements UserRepositoryInterface
         $this->userModel = $userModel;
     }
 
-    public function findByEmail($email): User|null
+    public function findByEmail(string $email): User|null
     {
         return $this->userModel->where('email', $email)->first();
     }
 
-    public function isEmailUnique($email): bool
+    public function isEmailUnique(string $email): bool
     {
         return $this->userModel->where('email', $email)->doesntExist();
     }
