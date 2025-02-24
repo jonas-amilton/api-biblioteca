@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
-    protected $userRepository;
+    private $userRepository;
 
     public function __construct(UserRepository $userRepository)
     {
